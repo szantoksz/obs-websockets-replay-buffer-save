@@ -1,9 +1,9 @@
-use std::time::SystemTime;
-use time_format::{from_system_time_ms, strftime_ms_local};
+use chrono::Local;
 
 pub fn print_log(text: &str) {
-    let time_format_ms = from_system_time_ms(SystemTime::now()).unwrap();
-    let timestamp = strftime_ms_local("%H:%M:%S:{ms}", time_format_ms).unwrap();
+    // get machine time
+    let time_now = Local::now();
+    let timestamp = time_now.format("%H:%M:%S:%3f");
 
     println!("[{timestamp}] {text}");
 }

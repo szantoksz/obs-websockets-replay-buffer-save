@@ -147,20 +147,20 @@ async fn main() {
     utils::logs::print_log("  > Reading ip (obs_ws->ip)...");
     let obs_ws_ip = config_file_json["obs_ws"]["ip"]
         .as_str()
-        .unwrap()
+        .unwrap_or("null")
         .to_string();
     utils::logs::print_log(&format!("  > Done:\n{}", obs_ws_ip));
 
     // > port
     utils::logs::print_log("  > Reading port (obs_ws->port)...");
-    let obs_ws_port = config_file_json["obs_ws"]["port"].as_u64().unwrap();
+    let obs_ws_port = config_file_json["obs_ws"]["port"].as_u64().unwrap_or(0);
     utils::logs::print_log(&format!("  > Done:\n{}", obs_ws_port));
 
     // > password
     utils::logs::print_log("  > Reading password (obs_ws->passwd)...");
     let obs_ws_passwd = config_file_json["obs_ws"]["passwd"]
         .as_str()
-        .unwrap()
+        .unwrap_or("null")
         .to_string();
     utils::logs::print_log(&format!("  > Done:\n{}", obs_ws_passwd));
 
@@ -174,7 +174,7 @@ async fn main() {
 
     // verify that none of the obs ws values are null and the port is valid
     utils::logs::print_log("Verifying that none of the OBS websocket values are null...");
-    if obs_ws_ip.is_empty() || obs_ws_port == 0 || obs_ws_port > 65535 || obs_ws_passwd.is_empty() {
+    if obs_ws_ip == "null" || obs_ws_port == 0 || obs_ws_passwd == "null" {
         utils::logs::print_log("Done: yes");
         println!(
             "\nPlease make sure that your config file is configured correctly, follow the comments in the config file if needed, or worst case scenratio delete the config file and run the app again to re-generate it."
